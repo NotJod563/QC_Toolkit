@@ -1,0 +1,33 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ===== Virtual environment =====
+venv/
+.env/
+.env.*
+
+# ===== Flask =====
+instance/
+.webassets-cache
+
+# ===== Logs / temp =====
+*.log
+*.tmp
+*.zip
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== IDE =====
+.vscode/
+.idea/
+
+# ===== Local data =====
+products.json
+products_backup_*.json
+backup_licenses*/
+backup_registry*/

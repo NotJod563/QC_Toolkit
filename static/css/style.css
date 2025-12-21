@@ -1,0 +1,128 @@
+
+.sidebar {
+  padding-right: 12px;
+}
+
+.sidebar-title {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin-bottom: 12px;
+}
+
+.sidebar-btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 600;
+  font-size: 14px;
+  width: 100%;
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.sidebar-btn:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+}
+
+.sidebar-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.22rem rgba(13, 110, 253, 0.18), 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.sidebar-btn--warning {
+  background: #f2b705;      
+  color: #1f1f1f;
+}
+
+.sidebar-btn--success {
+  background: #1f8f5f;    
+}
+
+.sidebar-btn--info {
+  background: #4a90a4;    
+  color: #ffffff;
+}
+
+.sidebar-btn--export {
+  background: #5b6fbf;    
+  color: #ffffff;
+}
+
+.sidebar-btn--import {
+  background: #4f46e5;   
+  color: #ffffff;
+}
+
+.sidebar-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(0,0,0,0.45);
+  margin: 14px 0 8px;
+}
+
+.sidebar hr {
+  margin: 14px 0;
+  opacity: 0.15;
+}
+
+.program-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.program-icon-small {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.add-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #888;
+  height: 100%;
+  min-height: 150px;
+}
+
+
+.license-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.license-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  border: 1px solid transparent;
+}
+
+.license-pill--ok {
+  background: rgba(25, 135, 84, 0.12);
+  color: #146c43;
+  border-color: rgba(25, 135, 84, 0.25);
+}

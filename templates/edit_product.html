@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit {{ program.name }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body class="container py-5">
+  <h2 class="d-flex align-items-center gap-2">
+    Edit {{ program.name }}
+    <img
+      id="icon-preview-top"
+      src="{{ program.icon if program.icon else '/static/icons/default.png' }}"
+      alt="icon"
+      width="32"
+      height="32"
+      style="object-fit: contain;"
+    >
+    Settings
+  </h2>
+
+  <form method="POST">
+    <!-- Executable Path -->
+    <div class="mb-3">
+      <label class="form-label">Executable Path (.exe)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exe_path"
+        name="exe_path"
+        value="{{ program.exe_path }}"
+        required
+      />
+      <div class="form-text">Після зміни шляху іконка оновиться автоматично.</div>
+    </div>
+
+    <!-- Program Name -->
+    <div class="mb-3">
+      <label class="form-label">Program Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        id="program_name"
+        value="{{ program.name }}"
+        required
+      />
+    </div>
+
+    <!-- Internal ID -->
+    <input type="hidden" name="id" id="program_id" value="{{ program.id }}" />
+
+    <!-- Installation Directory -->
+    <div class="mb-3">
+      <label class="form-label">Installation Directory</label>
+      <input
+        type="text"
+        class="form-control"
+        name="directory"
+        id="directory"
+        value="{{ program.directory }}"
+      />
+    </div>
+
+    <!-- Registry Path -->
+    <div class="mb-3">
+      <label class="form-label">Registry Path</label>
+      <input
+        type="text"
+        class="form-control"
+        name="registry_path"
+        value="{{ program.registry_path }}"
+      />
+    </div>
+
+    <!-- License File Names -->
+    <div class="mb-3">
+      <label class="form-label">License File Names (comma-separated)</label>
+      <input
+        type="text"
+        class="form-control"
+        name="license_names"
+        id="license_names"
+        value="{{ program.license_names | join(', ') }}"
+      />
+    </div>
+
+    <!-- License Folder -->
+    <div class="mb-3">
+      <label class="form-label">License Folder</label>
+      <input
+        type="text"
+        class="form-control"
+        name="license_folder"
+        value="{{ program.license_folder }}"
+      />
+    </div>
+
+    <!-- Log Folders -->
+    <div class="mb-3">
+        <label class="form-label">Log folders (one per line)</label>
+        <textarea class="form-control" name="log_folders" rows="4"
+                    placeholder="C:\Path\To\Logs">{{ program.log_folders | default([]) | join('\n') }}</textarea>
+    </div>
+
+    <!-- Icon preview -->
+    <div class="mb-3">
+      <label class="form-label">Program Icon</label><br />
+      <img
+        id="icon-preview"
+        src="{{ program.icon if program.icon else '/static/icons/default.png' }}"
+        alt="icon"
+        width="64"
+        height="64"
+        style="object-fit: contain;"
+      />
+    </div>
+
+    <!-- Hidden icon path -->
+    <input
+      type="hidden"
+      name="icon"
+      id="icon_url"
+      value="{{ program.icon if program.icon else '/static/icons/default.png' }}"
+    />
+
+    <!-- Buttons -->
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="/" class="btn btn-secondary">Cancel</a>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const exeInput = document.getElementById("exe_path");
+      const dirInput = document.getElementById("directory");
+      const iconTop = document.getElementById("icon-preview-top");
+      const iconPreview = document.getElementById("icon-preview");
+      const iconHidden = document.getElementById("icon_url");
+
+      function sanitizePath(p) {
+        return (p || "").trim().replace(/^"+|"+$/g, "");
+      }
+
+      async function updateFromExe() {
+        const exePath = sanitizePath(exeInput.value);
+        if (!exePath) return;
+
+        try {
+            const formData = new FormData();
+            formData.append("exe_path", exePath);
+            formData.append("program_id", document.getElementById("program_id").value);
+
+        const res = await fetch("/extract_exe_info", { method: "POST", body: formData });
+          if (!res.ok) return;
+
+          const data = await res.json();
+          if (data.error) return;
+
+          if (data.directory && dirInput && !dirInput.value) {
+            dirInput.value = data.directory;
+          }
+
+          if (data.icon_url) {
+            const busted = data.icon_url + "?v=" + Date.now();
+            iconPreview.src = busted;
+            iconTop.src = busted;
+            iconHidden.value = data.icon_url; 
+        }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      exeInput.addEventListener("change", updateFromExe);
+
+      let t = null;
+      exeInput.addEventListener("input", () => {
+        clearTimeout(t);
+        t = setTimeout(updateFromExe, 500);
+      });
+        exeInput.addEventListener("paste", () => setTimeout(updateFromExe, 0));
+        document.querySelector("form").addEventListener("submit", () => {
+        exeInput.value = sanitizePath(exeInput.value);
+      });
+    });
+  </script>
+</body>
+</html>
