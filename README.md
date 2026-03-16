@@ -54,6 +54,33 @@ QC_Toolkit/
 └── screenshots/
 ```
 
+## Example configuration (products.json)
+
+QC Toolkit uses a JSON configuration file to define managed applications.
+
+Below is a simplified example of how a program entry may look:
+
+```json
+{
+  "programs": [
+    {
+      "id": "example_app",
+      "name": "Example Application",
+      "exe_path": "C:\\Program Files\\ExampleApp\\app.exe",
+      "registry_path": "HKEY_CURRENT_USER\\Software\\ExampleApp",
+      "directory": "C:\\Program Files\\ExampleApp",
+      "license_folder": "C:\\Licenses",
+      "license_names": [
+        "example.lic",
+        "trial.lic"
+      ],
+      "icon": "/static/icons/example.png",
+      "log_folders": [
+        "C:\\Logs\\ExampleApp"
+      ]
+    }
+  ]
+}
 ---
 
 ## Tech Stack
