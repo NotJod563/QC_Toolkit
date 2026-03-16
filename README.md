@@ -1,109 +1,130 @@
 # QC Toolkit
 
-QC Toolkit — це локальний desktop-інструмент для керування встановленими програмами, їх ліцензіями, налаштуваннями та логами в середовищі Windows.
+QC Toolkit is a lightweight Windows QA toolbox for managing installed applications, license files, registry-related operations, and application settings through a simple local web interface.
 
-Проєкт створений у межах дипломної роботи та орієнтований на задачі швидкої діагностики, резервного копіювання та відновлення стану програмного забезпечення.
-
----
-
-## Основні можливості
-
-- Управління картками програм (додавання, редагування, копіювання)
-- Перевірка наявності ліцензійних файлів у вказаних папках
-- Приховування та відновлення ліцензійних файлів без їх видалення
-- Автоматичне створення резервних копій ліцензій
-- Робота з гілками Windows Registry:
-  - визначення наявності ключів
-  - отримання актуальної версії з підгілок
-  - повне видалення та відновлення гілок реєстру з бекапу
-- Збір логів з вказаних папок із збереженням структури
-- Експорт логів в ZIP-архів у вибране користувачем місце
-- Імпорт та експорт усіх налаштувань застосунку
+The project was originally created as a diploma project and currently represents an early **V1 prototype** focused on practical QA/support workflows on Windows machines.
 
 ---
 
-## Архітектура проєкту
+## Screenshots
 
-Проєкт побудований за модульним принципом:
+### Main dashboard
+<img src="screenshots/dashboard.png" width="900">
+
+### Import settings
+<img src="screenshots/import_settings.png" width="900">
+
+### Add product
+<img src="screenshots/add_product.png" width="900">
+
+---
+
+## Features
+
+Current V1 functionality includes:
+
+- Managing product cards
+- Adding, editing and duplicating application entries
+- Detecting configured license files
+- Hiding and restoring license files without deleting them
+- Basic Windows Registry related operations
+- Importing and exporting application settings
+- Local web interface for quick access to tools
+
+This toolkit is designed for **local use on Windows systems** and does not transmit any data externally.
+
+---
+
+## Project Structure
 
 ```
 QC_Toolkit/
 │
-├── app.py                  # Flask application entry point
-├── products.json           # Конфігурація програм
+├── app.py
+├── requirements.txt
 │
 ├── modules/
-│   ├── scanner.py          # Обробка програм та ліцензій
-│   ├── license_ops.py      # Робота з ліцензіями
-│   ├── registry_ops.py     # Робота з Windows Registry
-│   └── logs_ops.py         # Збір та архівація логів
+│   ├── __init__.py
+│   ├── scanner.py
+│   ├── license_ops.py
+│   └── registry_ops.py
 │
-├── templates/              # HTML-шаблони (Jinja2)
-├── static/                 # CSS, іконки
-└── requirements.txt
+├── static/
+├── templates/
+└── screenshots/
 ```
 
 ---
 
-## Технологічний стек
+## Tech Stack
 
 - Python 3.11+
 - Flask
-- Windows Registry API (`winreg`)
 - Bootstrap 5
-- ZIP / файлові операції (standard library)
+- Windows Registry API (`winreg`)
+- Python standard library
 
 ---
 
-## Платформа
+## Platform
 
-- **Операційна система:** Windows 10 / Windows 11  
-- **Тип застосунку:** локальний web-інтерфейс (localhost)
-
----
-
-## Безпека даних
-
-- Жодні дані не передаються мережею
-- Усі резервні копії зберігаються локально
-- Перед будь-яким видаленням:
-  - створюється повний бекап
-  - оригінальні файли не знищуються безповоротно
+- Windows 10 / Windows 11  
+- Local web interface (`localhost`)
 
 ---
 
-## Запуск проєкту
+## Run the project
+
+Create virtual environment
 
 ```bash
 python -m venv venv
+```
+
+Activate environment
+
+```bash
 venv\Scripts\activate
+```
+
+Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
+
+Run application
+
+```bash
 python app.py
 ```
 
-Після запуску застосунок доступний за адресою:  
-`http://127.0.0.1:5000`
+After launch open
+
+```
+http://127.0.0.1:5000
+```
 
 ---
 
-## Призначення проєкту
+## Project Status
 
-QC Toolkit розроблений як інструмент для:
-- тестувальників (QA)
-- технічної підтримки
-- розробників
-- користувачів, яким потрібно швидко керувати станом програм
-
-Проєкт демонструє практичну роботу з:
-- файловою системою
-- реєстром Windows
-- резервним копіюванням
-- структурованими конфігураціями
+This repository contains an experimental **V1 version** of the toolkit.  
+The project may evolve further with additional modules and features.
 
 ---
 
-## Автор
+## 🇺🇦 Український опис
 
-Дипломний проєкт  
-Автор: Чабанов Микола
-Рік: 2025
+QC Toolkit — це локальний Windows-інструмент із веб-інтерфейсом для керування програмами, ліцензіями та частиною операцій із реєстром.
+
+Проєкт створений у межах дипломної роботи та використовується як практичний інструмент для задач тестування та технічної підтримки.
+
+Поточна версія — **V1 прототип**.
+
+---
+
+## Author
+
+Mykola Chabanov  
+Diploma project, 2025
